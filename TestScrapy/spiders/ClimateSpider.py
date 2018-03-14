@@ -9,7 +9,6 @@ class ClimateSpider(scrapy.Spider):
 
     def parse(self, response):
         item = ClimateItem()
-
         for box in response.xpath('//html//body//app//*[@id="hourly-forecast-table"]/tbody//tr'):
             item['name'] = box.xpath('//*[@id="inner-content"]/div[1]/div/div/city-header/div/div/a[1]/text()').extract()[0].strip()
             item['lat'] = box.xpath('//*[@id="inner-content"]/div[1]/div/div/city-header/div/span/strong[2]/text()').extract()[0] + "N"
