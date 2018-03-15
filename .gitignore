@@ -2,8 +2,6 @@
 *.so
 *.egg
 *.egg-info
-*.xml
 dist
 build
-.idea/
 _trial_temp
