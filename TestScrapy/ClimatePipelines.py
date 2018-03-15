@@ -32,12 +32,12 @@ class ClimatePipeline(object):
 
     @staticmethod
     def _conditional_update(tx, item):
-        insert_location = 'insert into `station_location`(`station_name`, `lat`, `lng`) values(%s, %s, %s) on duplicate key update station_id = station_id'
-        update_climate = 'insert into `station_climate`(`station_id`, `time`, `temp`, `prep`) values((select station_id from `station_location` where `station_name` = %s), %s, %s, %s) on duplicate key update `temp` = %s, `prep` = %s'
-        params_station_location = (item['name'], item['lat'], item['lng'])
-        params_station_climate = (item['name'], item['time'], item['temp'],  item['prep'], item['temp'], item['prep'])
-        tx.execute(insert_location, params_station_location)
-        tx.execute(update_climate, params_station_climate)
+        insert_climate_code = 'insert ignore into `climate_code`(`code`, `climate`) values(%s, %s)'
+        insert_station_climate = 'insert into `station_climate`(`station_id`, `time`, `temp`, `prep`, `climate`, `wind_speed`, `wind_dire`, `air_pres`, `rela_hum`, `cloud`, `visibility`) values((select station_id from `station_location` where `station_name` = %s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        params_climate_code = (item['climate_code'], item['day_climate'])
+        params_station_climate = (item['name'], item['time'], item['temp'],  item['prep'], item['climate'], item['wind_speed'], item['wind_dire'], item['air_pres'], item['relative_hum'], item['cloud'], item['visibility'])
+        tx.execute(insert_climate_code, params_climate_code)
+        tx.execute(insert_station_climate, params_station_climate)
 
     @staticmethod
     def _handle_error(failure, item, spider):
