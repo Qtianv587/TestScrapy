@@ -17,13 +17,13 @@ NEWSPIDER_MODULE = 'TestScrapy.spiders'
 ITEM_PIPELINES = {
     "TestScrapy.ClimatePipelines.ClimatePipeline": 1
 }
-
-#Mysql数据库的配置信息
-MYSQL_HOST = '192.168.129.187'
-MYSQL_DBNAME = 'climate'
-MYSQL_USER = 'root'
-MYSQL_PASSWD = '123456'
-MYSQL_PORT = 3306
+#
+# #Mysql数据库的配置信息
+# MYSQL_HOST = '192.168.129.187'
+# MYSQL_DBNAME = 'climate'
+# MYSQL_USER = 'root'
+# MYSQL_PASSWD = '123456'
+# MYSQL_PORT = 3306
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'TestScrapy (+http://www.yourdomain.com)'
