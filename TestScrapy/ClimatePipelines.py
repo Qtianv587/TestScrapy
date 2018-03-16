@@ -37,8 +37,8 @@ class ClimatePipeline(object):
         # insert_station_forecast = 'insert into `station_forecast`(`station_id`, `time`, `temp`, `prep`, `climate`, `wind_speed`, `wind_dire`, `air_pres`, `relative_hum`, `cloud`, `visibility`) values((select station_id from `station_location` where `station_name` = %s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
         params_climate_code = (item['climate_code'], item['day_climate'])
         params_station_forecast = (item['name'], item['time'], item['temp'],  item['prep'], item['climate'], item['wind_speed'], item['wind_dire'], item['air_pres'], item['relative_hum'], item['cloud'], item['visibility'])
-        tx.execute(insert_station_forecast, params_station_forecast)
         tx.execute(insert_climate_code, params_climate_code)
+        tx.execute(insert_station_forecast, params_station_forecast)
 
     @staticmethod
     def _handle_error(failure, item, spider):
