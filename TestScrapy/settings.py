@@ -15,7 +15,7 @@ SPIDER_MODULES = ['TestScrapy.spiders']
 NEWSPIDER_MODULE = 'TestScrapy.spiders'
 
 ITEM_PIPELINES = {
-    "TestScrapy.ClimatePipelines.ClimatePipeline": 1
+    "TestScrapy.ClimatePipelines.ClimatePipeline": 300
 }
 
 #Mysql数据库的配置信息
