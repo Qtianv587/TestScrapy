@@ -61,7 +61,6 @@ class ClimateSpider(scrapy.Spider):
                     if '现象' in climates.xpath('./text()').extract()[0].strip().encode('utf-8'):
                         continue
                     climate = climates.xpath('./img/@src').extract()[0]
-                    print("========regregreg======")
                     # print(climate)
                     res = re.findall(r"/([0-9]*)\.png", climate)[0]
                     climate_list.append(res)
@@ -189,7 +188,6 @@ class ClimateSpider(scrapy.Spider):
                     if '现象' in climates.xpath('./text()').extract()[0].strip().encode('utf-8'):
                         continue
                     climate = climates.xpath('./img/@src').extract()[0]
-                    print("========regregreg======")
                     # print(climate)
                     res = re.findall(r"/([0-9]*)\.png", climate)[0]
                     climate_list.append(res)
@@ -316,7 +314,6 @@ class ClimateSpider(scrapy.Spider):
                     if '现象' in climates.xpath('./text()').extract()[0].strip().encode('utf-8'):
                         continue
                     climate = climates.xpath('./img/@src').extract()[0]
-                    print("========regregreg======")
                     # print(climate)
                     res = re.findall(r"/([0-9]*)\.png", climate)[0]
                     climate_list.append(res)
@@ -443,7 +440,6 @@ class ClimateSpider(scrapy.Spider):
                     if '现象' in climates.xpath('./text()').extract()[0].strip().encode('utf-8'):
                         continue
                     climate = climates.xpath('./img/@src').extract()[0]
-                    print("========regregreg======")
                     # print(climate)
                     res = re.findall(r"/([0-9]*)\.png", climate)[0]
                     climate_list.append(res)
@@ -570,7 +566,6 @@ class ClimateSpider(scrapy.Spider):
                     if '现象' in climates.xpath('./text()').extract()[0].strip().encode('utf-8'):
                         continue
                     climate = climates.xpath('./img/@src').extract()[0]
-                    print("========regregreg======")
                     # print(climate)
                     res = re.findall(r"/([0-9]*)\.png", climate)[0]
                     climate_list.append(res)
@@ -697,7 +692,6 @@ class ClimateSpider(scrapy.Spider):
                     if '现象' in climates.xpath('./text()').extract()[0].strip().encode('utf-8'):
                         continue
                     climate = climates.xpath('./img/@src').extract()[0]
-                    print("========regregreg======")
                     # print(climate)
                     res = re.findall(r"/([0-9]*)\.png", climate)[0]
                     climate_list.append(res)
@@ -824,7 +818,6 @@ class ClimateSpider(scrapy.Spider):
                     if '现象' in climates.xpath('./text()').extract()[0].strip().encode('utf-8'):
                         continue
                     climate = climates.xpath('./img/@src').extract()[0]
-                    print("========regregreg======")
                     # print(climate)
                     res = re.findall(r"/([0-9]*)\.png", climate)[0]
                     climate_list.append(res)
