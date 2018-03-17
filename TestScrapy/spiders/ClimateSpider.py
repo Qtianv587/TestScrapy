@@ -1,6 +1,7 @@
 # coding=utf-8
 import scrapy
 import time
+import datetime
 import re
 from TestScrapy.ClimateItems import ClimateItem
 
@@ -123,7 +124,7 @@ from TestScrapy.ClimateItems import ClimateItem
 #             visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
 #             if '能见度' in visi_str:
 #                 continue
-#             visi_list.append(visi_str.strip('公里').strip('≥'))
+#             visi_list.append(visi_str.strip('公里'))
 #
 #         for i in range(0, len(time_list)):
 #             item['name'] = station_name
@@ -144,6 +145,7 @@ from TestScrapy.ClimateItems import ClimateItem
 
 class ClimateSpider(scrapy.Spider):
     name = "ClimateSpider"
+
     # allowed_domains = ["nmc.gov.cn"]
     stations = ["chengdu", "longquanyi", "xindou", "wenjiang", "jintang", "shuangliu", "pixian", "dayi", "pujiang",
                 "xinjin", "doujiangyan", "pengxian", "qionglai", "chongqing"]
@@ -152,17 +154,31 @@ class ClimateSpider(scrapy.Spider):
         start_urls.append("http://www.nmc.gov.cn/publish/forecast/ASC/" + station + ".html")
 
     def parse(self, response):
-        time_now = time.time()
-        date_day0 = time.strftime('%Y-%m-%d', time.localtime(time_now))
-        date_day1 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600))
-        date_day2 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 2))
-        date_day3 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 3))
-        date_day4 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 4))
-        date_day5 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 5))
-        date_day6 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 6))
-        date_day7 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 7))
         item = ClimateItem()
         for box in response.xpath('//*[@id="hour3"]'):
+            time_now = time.time()
+            year_now = time.strftime('%Y', time.localtime(time_now))
+            time_now_extract = response.xpath('//*[@id="forecast"]/div[1]/div[1]/table/tbody/tr[1]/td[2]/text()').extract()[0].encode('utf-8')
+            month_day = time_now_extract.split("月")
+            day = month_day[1].split("日")[0]
+            day_now = year_now + "-" + month_day[0].strip() + "-" + day
+            date_day = datetime.datetime.strptime(day_now, "%Y-%m-%d")
+            date_day0 = date_day.strftime('%Y-%m-%d').split(" ")[0]
+            date_day1 = (date_day + datetime.timedelta(days=1)).strftime('%Y-%m-%d').split(" ")[0]
+            date_day2 = (date_day + datetime.timedelta(days=2)).strftime('%Y-%m-%d').split(" ")[0]
+            date_day3 = (date_day + datetime.timedelta(days=3)).strftime('%Y-%m-%d').split(" ")[0]
+            date_day4 = (date_day + datetime.timedelta(days=4)).strftime('%Y-%m-%d').split(" ")[0]
+            date_day5 = (date_day + datetime.timedelta(days=5)).strftime('%Y-%m-%d').split(" ")[0]
+            date_day6 = (date_day + datetime.timedelta(days=6)).strftime('%Y-%m-%d').split(" ")[0]
+            date_day7 = (date_day + datetime.timedelta(days=7)).strftime('%Y-%m-%d').split(" ")[0]
+            # date_day0 = time.strftime('%Y-%m-%d', time.localtime(time_now))
+            # date_day1 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600))
+            # date_day2 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 2))
+            # date_day3 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 3))
+            # date_day4 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 4))
+            # date_day5 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 5))
+            # date_day6 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 6))
+            # date_day7 = time.strftime('%Y-%m-%d', time.localtime(time_now + 24 * 3600 * 7))
             station_name = box.xpath('/html/head/title/text()').extract()[0].split("-")[0]
 
             # for x in range(0, 7):
@@ -279,7 +295,12 @@ class ClimateSpider(scrapy.Spider):
                     visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
                     if '能见度' in visi_str:
                         continue
-                    visi_list.append(visi_str.strip('公里').strip('≥'))
+                    if '≥' in visi_str:
+                        visi_list.append('>=' + visi_str.strip('≥').strip('公里'))
+                    elif '≤' in visi_str:
+                        visi_list.append('<=' + visi_str.strip('≤').strip('公里'))
+                    elif '-' in visi_str:
+                        visi_list.append(visi_str.strip(' '))
 
                 for i in range(0, len(time_list)):
                     item['name'] = station_name
@@ -407,7 +428,12 @@ class ClimateSpider(scrapy.Spider):
                     visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
                     if '能见度' in visi_str:
                         continue
-                    visi_list.append(visi_str.strip('公里').strip('≥'))
+                    if '≥' in visi_str:
+                        visi_list.append('>=' + visi_str.strip('≥').strip('公里'))
+                    elif '≤' in visi_str:
+                        visi_list.append('<=' + visi_str.strip('≤').strip('公里'))
+                    elif '-' in visi_str:
+                        visi_list.append(visi_str.strip(' '))
 
                 for i in range(0, len(time_list)):
                     item['name'] = station_name
@@ -536,7 +562,12 @@ class ClimateSpider(scrapy.Spider):
                     visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
                     if '能见度' in visi_str:
                         continue
-                    visi_list.append(visi_str.strip('公里').strip('≥'))
+                    if '≥' in visi_str:
+                        visi_list.append('>=' + visi_str.strip('≥').strip('公里'))
+                    elif '≤' in visi_str:
+                        visi_list.append('<=' + visi_str.strip('≤').strip('公里'))
+                    elif '-' in visi_str:
+                        visi_list.append(visi_str.strip(' '))
 
                 for i in range(0, len(time_list)):
                     item['name'] = station_name
@@ -665,7 +696,12 @@ class ClimateSpider(scrapy.Spider):
                     visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
                     if '能见度' in visi_str:
                         continue
-                    visi_list.append(visi_str.strip('公里').strip('≥'))
+                    if '≥' in visi_str:
+                        visi_list.append('>=' + visi_str.strip('≥').strip('公里'))
+                    elif '≤' in visi_str:
+                        visi_list.append('<=' + visi_str.strip('≤').strip('公里'))
+                    elif '-' in visi_str:
+                        visi_list.append(visi_str.strip(' '))
 
                 for i in range(0, len(time_list)):
                     item['name'] = station_name
@@ -794,7 +830,12 @@ class ClimateSpider(scrapy.Spider):
                     visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
                     if '能见度' in visi_str:
                         continue
-                    visi_list.append(visi_str.strip('公里').strip('≥'))
+                    if '≥' in visi_str:
+                        visi_list.append('>=' + visi_str.strip('≥').strip('公里'))
+                    elif '≤' in visi_str:
+                        visi_list.append('<=' + visi_str.strip('≤').strip('公里'))
+                    elif '-' in visi_str:
+                        visi_list.append(visi_str.strip(' '))
 
                 for i in range(0, len(time_list)):
                     item['name'] = station_name
@@ -923,7 +964,12 @@ class ClimateSpider(scrapy.Spider):
                     visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
                     if '能见度' in visi_str:
                         continue
-                    visi_list.append(visi_str.strip('公里').strip('≥'))
+                    if '≥' in visi_str:
+                        visi_list.append('>=' + visi_str.strip('≥').strip('公里'))
+                    elif '≤' in visi_str:
+                        visi_list.append('<=' + visi_str.strip('≤').strip('公里'))
+                    elif '-' in visi_str:
+                        visi_list.append(visi_str.strip(' '))
 
                 for i in range(0, len(time_list)):
                     item['name'] = station_name
@@ -1052,7 +1098,12 @@ class ClimateSpider(scrapy.Spider):
                     visi_str = visis.xpath('./text()').extract()[0].strip().encode('utf-8')
                     if '能见度' in visi_str:
                         continue
-                    visi_list.append(visi_str.strip('公里').strip('≥'))
+                    if '≥' in visi_str:
+                        visi_list.append('>=' + visi_str.strip('≥').strip('公里'))
+                    elif '≤' in visi_str:
+                        visi_list.append('<=' + visi_str.strip('≤').strip('公里'))
+                    elif '-' in visi_str:
+                        visi_list.append(visi_str.strip(' '))
 
                 for i in range(0, len(time_list)):
                     item['name'] = station_name
