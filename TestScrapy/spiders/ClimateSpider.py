@@ -268,6 +268,8 @@ class ClimateSpider(scrapy.Spider):
                         wd_list.append('SW')
                     elif wd_str == '东南风':
                         wd_list.append('SE')
+                    elif wd_str == '无持续风向':
+                        wd_list.append('-')
 
                 #  气压
                 for air_pres in table0.xpath('./div[7]//div'):
@@ -401,6 +403,8 @@ class ClimateSpider(scrapy.Spider):
                         wd_list.append('SW')
                     elif wd_str == '东南风':
                         wd_list.append('SE')
+                    elif wd_str == '无持续风向':
+                        wd_list.append('-')
 
                 #  气压
                 for air_pres in table1.xpath('./div[7]//div'):
@@ -535,6 +539,8 @@ class ClimateSpider(scrapy.Spider):
                         wd_list.append('SW')
                     elif wd_str == '东南风':
                         wd_list.append('SE')
+                    elif wd_str == '无持续风向':
+                        wd_list.append('-')
 
                 #  气压
                 for air_pres in table2.xpath('./div[7]//div'):
@@ -669,6 +675,8 @@ class ClimateSpider(scrapy.Spider):
                         wd_list.append('SW')
                     elif wd_str == '东南风':
                         wd_list.append('SE')
+                    elif wd_str == '无持续风向':
+                        wd_list.append('-')
 
                 #  气压
                 for air_pres in table3.xpath('./div[7]//div'):
@@ -803,6 +811,8 @@ class ClimateSpider(scrapy.Spider):
                         wd_list.append('SW')
                     elif wd_str == '东南风':
                         wd_list.append('SE')
+                    elif wd_str == '无持续风向':
+                        wd_list.append('-')
 
                 #  气压
                 for air_pres in table4.xpath('./div[7]//div'):
@@ -937,6 +947,8 @@ class ClimateSpider(scrapy.Spider):
                         wd_list.append('SW')
                     elif wd_str == '东南风':
                         wd_list.append('SE')
+                    elif wd_str == '无持续风向':
+                        wd_list.append('-')
 
                 #  气压
                 for air_pres in table5.xpath('./div[7]//div'):
@@ -1071,6 +1083,8 @@ class ClimateSpider(scrapy.Spider):
                         wd_list.append('SW')
                     elif wd_str == '东南风':
                         wd_list.append('SE')
+                    elif wd_str == '无持续风向':
+                        wd_list.append('-')
 
                 #  气压
                 for air_pres in table6.xpath('./div[7]//div'):
