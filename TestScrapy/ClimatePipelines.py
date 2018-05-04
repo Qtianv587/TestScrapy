@@ -6,7 +6,7 @@ import MySQLdb
 class ClimatePipeline(object):
     def __init__(self):
         # 初始化数据库对象
-        self.connect = MySQLdb.connect('192.168.129.69', 'blm', 'boloomodb', 'jjsw_climate_forecast', charset='utf8')
+        self.connect = MySQLdb.connect('192.168.129.193', 'blm', 'boloomodb', 'jjsw', charset='utf8')
         # self.connect = MySQLdb.connect('192.168.129.187', 'root', '123456', 'climate', charset='utf8')
         self.cursor = self.connect.cursor()
 
