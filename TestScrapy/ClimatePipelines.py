@@ -12,7 +12,7 @@ class ClimatePipeline(object):
 
     def process_item(self, item, spider):
         insert_climate_code = 'insert ignore into `codetable_climate_code`(`CLIMATE_CODE_ID`, `NAME`) values(%s, %s)'
-        replace_station_forecast = 'replace into `t1101_climate`(`COUNTY_ID`, `TIME`, `TEMP`, `RAINFALL`, `CLIMATE_ID`, `WIND_SPEED`, `WIND_DIRECTION`, `AIR_PRESSURE`, `RELATIVE_HUM`, `CLOUDAGE`, `VISIBILITY`) values((select COUNTY_ID from `t1201_county` where `NAME` = %s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        replace_station_forecast = 'replace into `t1101_meteorology`(`COUNTY_ID`, `TIME`, `TEMP`, `RAINFALL`, `CLIMATE_ID`, `WIND_SPEED`, `WIND_DIRECTION`, `AIR_PRESSURE`, `RELATIVE_HUM`, `CLOUDAGE`, `VISIBILITY`) values((select COUNTY_ID from `t1201_county` where `NAME` = %s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
         params_climate_code = (item['climate_code'], item['day_climate'])
         params_station_forecast = (item['name'], item['time'], item['temp'], item['prep'], item['climate'], item['wind_speed'], item['wind_dire'], item['air_pres'], item['relative_hum'], item['cloud'], item['visibility'])
         self.cursor.execute(replace_station_forecast, params_station_forecast)
