@@ -147,8 +147,8 @@ class ClimateSpider(scrapy.Spider):
     name = "ClimateSpider"
 
     # allowed_domains = ["nmc.gov.cn"]
-    stations = ["chengdu", "longquanyi", "xindou", "wenjiang", "jintang", "shuangliu", "pixian", "dayi", "pujiang2",
-                "xinjin", "doujiangyan", "pengxian", "qionglai", "chongqing_"]
+    stations = ["chengdu", "longquanyi", "xindou", "wenjiang", "jintang", "shuangliu", "pixian", "dayi", "pujiang",
+                "xinjin", "doujiangyan", "pengxian", "qionglai", "chongqing"]
     start_urls = []
     for station in stations:
         start_urls.append("http://www.nmc.gov.cn/publish/forecast/ASC/" + station + ".html")
